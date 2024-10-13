@@ -1,0 +1,101 @@
+<!doctype html>
+<html data-theme="light">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@3.9.3/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <script>
+      async function readURL() {
+        let answer = document.getElementById("answer");
+        answer.classList.add("typing");
+        answer.textContent = "Analayzing site....."
+        let userInput = document.getElementById("inp12").value;
+        console.log(userInput)
+        const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({userInput})
+            });
+        const text = await response.json();
+        console.log('data', text)
+        answer.textContent = text.prediction;
+        answer.classList.remove("typing");
+      }
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .typing::after {
+        content: "|";
+        animation: blink 2s infinite;
+        margin-left: 3px;
+        display: inline-block;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
+    <title>Phishing Title</title>
+  </head>
+  <header></header>
+
+  <body class="h-screen text-black bg-base-100">
+    <div class="h-full flex flex-col justify-center items-center">
+      <h1 class="text-8xl font-bold" style="margin-bottom: 15px">
+        Phishing Detector
+      </h1>
+      <p class="text-2xl mt-6 leading-none">
+        Never get scammed again!
+        <span id="description" class="inline-block"></span>
+      </p>
+      <div class="space-x-4 mt-6" id="form11">
+        <div class="card w-98 bg-base-100 shadow-2xl border-dashed">
+          <div class="card-body flex flex-col justify-center items-center">
+            <p>Enter your url link!</p>
+            <form class="js-form">
+              <input
+                id="inp12"
+                type="text"
+                class="file-input file-input-bordered w-full max-w-xs"
+              />
+            </form>
+            <button
+              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              onclick="readURL()"
+            >
+              Submit
+            </button>
+            <p id="answer"></p>
+          </div>
+        </div>
+      </div>
+      <div class="space-x-4 mt-6 hidden" id="checkerbox">
+        <div class="card w-96 bg-base-100 shadow-2xl border-dashed">
+          <div class="card-body flex flex-col justify-center items-center">
+            <div id="checker" class="">
+            </p>WASSUP GUYS</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-sm rounded overflow-hidden shadow-lg"></div>
+    </div>
+  </body>
+</html>
